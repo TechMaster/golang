@@ -1,1 +1,0 @@
-# Buổi nào cũng phải soạn code demo và file ReadMe.md rất kỹ
