@@ -2,6 +2,7 @@
 
 trong ví dụ này, tôi đã làm những bước sau đây:
 1. Tạo dữ liệu mẫu từ [https://www.mockaroo.com/](https://www.mockaroo.com/), trả về file person.json có 1000 bản ghi
+  ![](mockaroo.jpg)
 2. Xem hướng dẫn ở đây [Parsing JSON files With Golang](https://tutorialedge.net/golang/parsing-json-with-golang/)
 3. Sau đó code ra file [app.go](app.go)
 4. Chạy thử ứng dụng sẽ in ra
@@ -36,6 +37,17 @@ Viết hàm ```GroupPeopleByCity```
   - Ajino Moto
   - Murakami
   - Kawazaki
+```
+
+Code ví dụ
+```go
+func GroupPeopleByCity(p []Person) (result map[string][]Person) {
+	result = make(map[string][]Person)
+	for _, person := range p {
+		result[person.City] = append(result[person.City], person)
+	}
+	return result
+}
 ```
 ### 2.2 Nhóm các nghề nghiệp và đếm số người làm
 Viết hàm ```GroupPeopleByJob```
