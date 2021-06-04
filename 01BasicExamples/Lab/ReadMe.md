@@ -7,3 +7,14 @@
 
 Xem hướng dẫn lệnh đọc từ bàn phím của Golang
 https://golangr.com/keyboard-input/
+
+```go
+package main
+
+import (
+	"fmt"
+	"math/rand"
+	"sort"
+	"time"
+)
+```
