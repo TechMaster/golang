@@ -1,7 +1,7 @@
 > Bài này tôi sẽ trình bày mấy vấn đề căn bản trong Golang qua code mẫu:
 > Pointer trong Golang
 > Receiver function
-> Code mẫu ở đây []()
+> [Code mẫu ở đây](https://github.com/TechMaster/golang/tree/main/07Pointer)
 
 # 1. Pointer trong Golang
 
