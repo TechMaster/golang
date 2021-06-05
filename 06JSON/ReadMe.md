@@ -20,7 +20,7 @@ name: Jess Evers, email: jevers8@zdnet.com, job: cleaner, city: Paris, salary: 1
 name: Marty Priestman, email: mpriestman9@senate.gov, job: driver, city: Jerusalem, salary: 14433, birthday: 1991-01-05
 ```
 
-## 2. Bài tập thực hành: hãy sử dụng slice, array, map, [set](https://pkg.go.dev/k8s.io/apimachinery/pkg/util/sets) hay bất kỳ cấu trúc dữ liệu nào bạn biết để 
+# 2. Bài tập thực hành: hãy sử dụng slice, array, map, [set](https://pkg.go.dev/k8s.io/apimachinery/pkg/util/sets) hay bất kỳ cấu trúc dữ liệu nào bạn biết để 
 
 ### 2.1 Gom tất cả những người trong cùng một thành phố lại
 Viết hàm ```GroupPeopleByCity```
