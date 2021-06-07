@@ -24,8 +24,14 @@ func buildRestV2() (appREST *fiber.App) {
 	})
 
 	appREST.Get("/books/:id", func(c *fiber.Ctx) error {
-		id, _ := c.ParamsInt("id")
-		book, _ := repository.FindBookById(id)
+		id, err := c.ParamsInt("id")
+		if err != nil {
+			return c.Status(400).SendString(err.Error())
+		}
+		book, err := repository.FindBookById(id)
+		if err != nil {
+			return c.Status(404).SendString(err.Error())
+		}
 		return c.JSON(book)
 	})
 
@@ -34,7 +40,7 @@ func buildRestV2() (appREST *fiber.App) {
 
 func main() {
 	app := fiber.New(fiber.Config{
-		Prefork:       true,
+		Prefork:       false,
 		CaseSensitive: true,
 		StrictRouting: true,
 	})
