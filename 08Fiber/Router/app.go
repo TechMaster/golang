@@ -25,5 +25,16 @@ func main() {
 		return c.SendString("Fiber Router is the interface. Any struct can implement it then return itself")
 	})
 
+	stacks := app.Stack()
+	for _, stack := range stacks {
+		for _, route := range stack {
+			fmt.Println(route.Method, " : ", route.Path)
+
+			for _, handler := range route.Handlers {
+				fmt.Println("   ", handler)
+			}
+		}
+	}
+
 	app.Listen(":3000")
 }

@@ -59,5 +59,12 @@ func main() {
 		return c.SendString(msg)
 	})
 
+	stacks := app.Stack()
+	for _, stack := range stacks {
+		for _, route := range stack {
+			fmt.Println(route.Method, " : ", route.Path)
+		}
+	}
+
 	log.Fatal(app.Listen(":3000"))
 }

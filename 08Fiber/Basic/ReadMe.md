@@ -44,7 +44,7 @@ func hello(c *fiber.Ctx) error {
 }
 ```
 
-## 4. Tham số đường dẫn ```:/name```
+## 4. Tham số đường dẫn ```/:name```
 Bổ xung ```app.Get("/:name", sayName) // GET /john```
 
 ```go
