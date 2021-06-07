@@ -71,13 +71,17 @@ Thử vào http://localhost:3000/John, kết quả in ra
 
 Hello, John 👋!
 
-## 5. Escape và Unescale URL
+## 5. Escape và Unescape URL
+
 
 Thử vào http://localhost:3000/Cường, kết quả in ra
 
 Hello, C%C6%B0%E1%BB%9Dng 👋!
 
-Tham số đường dẫn đã bị escape các ký tự unicode
+Tham số đường dẫn đã bị escape các ký tự unicode. 
+Hỏi: Tại sao cần escape URL?
+Trả lời trích từ trang [https://www.freecodecamp.org](https://www.freecodecamp.org/news/javascript-url-encode-example-how-to-use-encodeuricomponent-and-encodeuri/)
+> URLs can only have certain characters from the standard 128 character ASCII set. ... This means that we need to encode these characters when passing into a URL. Special characters such as & , space , ! when entered in a url need to be escaped, otherwise they may cause unpredictable situations
 
 Sửa lại như sau
 ```go
