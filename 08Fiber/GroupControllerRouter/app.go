@@ -31,8 +31,8 @@ func setupRoutes(app *fiber.App) {
 	v2.Get("/list", handler)           //
 	v2.Get("/user", handler)           // /api/v2/user
 
-	apiV3 := api.Group("/v3") // http://localhost:3000/api/v3/list
-	routerV3.ConfigRouterV3(apiV3)
+	v3 := api.Group("/v3") // http://localhost:3000/api/v3/list
+	routerV3.ConfigRouterV3(v3)
 
 }
 
