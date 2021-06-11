@@ -54,3 +54,42 @@ func CreateBook(c *fiber.Ctx) error {
 	return c.SendString(fmt.Sprintf("New book is created successfully with id = %d", bookId))
 
 }
+
+func UpdateBook(c *fiber.Ctx) error {
+	updatedBook := new(model.Book)
+
+	err := c.BodyParser(&updatedBook)
+	// if error
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"success": false,
+			"message": "Cannot parse JSON",
+			"error":   err,
+		})
+	}
+
+	err = repo.Books.UpdateBook(updatedBook)
+	if err != nil {
+		return c.Status(404).SendString(err.Error())
+	}
+
+	return c.SendString(fmt.Sprintf("Book with id = %d is successfully updated", updatedBook.Id))
+
+}
+
+func UpsertBook(c *fiber.Ctx) error {
+	book := new(model.Book)
+
+	err := c.BodyParser(&book)
+	// if error
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"success": false,
+			"message": "Cannot parse JSON",
+			"error":   err,
+		})
+	}
+
+	id := repo.Books.Upsert(book)
+	return c.SendString(fmt.Sprintf("Book with id = %d is successfully upserted", id))
+}

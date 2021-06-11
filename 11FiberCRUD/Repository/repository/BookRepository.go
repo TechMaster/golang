@@ -9,25 +9,26 @@ import (
 
 type BookRepo struct {
 	books  map[int64]*model.Book
-	autoID int64
+	autoID int64 //đây là biến đếm tự tăng gán giá trị cho id của Book
 }
 
-var Books BookRepo
+var Books BookRepo //Khai báo biến toàn cục, global variable
 
-func init() {
+func init() { //func init luôn chạy đầu tiên khi chúng ta import package
 	Books = BookRepo{autoID: 0}
 	Books.books = make(map[int64]*model.Book)
 	Books.InitData("sql:45312")
 }
 
+//Pointer receiver ~ method trong Java. Đối tượng chủ thể là *BookRepo
 func (r *BookRepo) getAutoID() int64 {
 	r.autoID += 1
 	return r.autoID
 }
 func (r *BookRepo) CreateNewBook(book *model.Book) int64 {
-	nextID := r.getAutoID()
+	nextID := r.getAutoID() //giống trong CSDL quan hệ sequence.NETX_VAL()
 	book.Id = nextID
-	r.books[nextID] = book
+	r.books[nextID] = book //tạo mới một phần tử trong map, gán key bằng nextID
 	return nextID
 }
 
@@ -57,7 +58,7 @@ func (r *BookRepo) GetAllBooks() map[int64]*model.Book {
 
 func (r *BookRepo) FindBookById(Id int64) (*model.Book, error) {
 	if book, ok := r.books[Id]; ok {
-		return book, nil
+		return book, nil //tìm được
 	} else {
 		return nil, errors.New("book not found")
 	}
@@ -69,5 +70,23 @@ func (r *BookRepo) DeleteBookById(Id int64) error {
 		return nil
 	} else {
 		return errors.New("book not found")
+	}
+}
+
+func (r *BookRepo) UpdateBook(book *model.Book) error {
+	if _, ok := r.books[book.Id]; ok {
+		r.books[book.Id] = book
+		return nil //tìm được
+	} else {
+		return errors.New("book not found")
+	}
+}
+
+func (r *BookRepo) Upsert(book *model.Book) int64 {
+	if _, ok := r.books[book.Id]; ok {
+		r.books[book.Id] = book
+		return book.Id
+	} else {
+		return r.CreateNewBook(book)
 	}
 }

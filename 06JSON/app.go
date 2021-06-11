@@ -31,7 +31,7 @@ func (p *Person) String() string {
 
 func main() {
 	// Open our jsonFile
-	jsonFile, err := os.Open("personsmall.json")
+	jsonFile, err := os.Open("person.json")
 	// if we os.Open returns an error then handle it
 	if err != nil {
 		fmt.Println(err)
@@ -60,4 +60,16 @@ func main() {
 			fmt.Println("  ", (&person).Name)
 		}
 	}
+
+	fmt.Println("\n2.2 Nhóm các nghề nghiệp và đếm số người làm")
+	groupPeopleByJob := GroupPeopleByJob(people)
+	fmt.Println(groupPeopleByJob)
+
+	fmt.Println("\n2.3 Tìm 5 nghề có nhiều người làm nhất, đếm từ cao xuống thấp")
+	top5JobsByNumer := Top5JobsByNumer(people)
+	PrintSliceKeyValue(top5JobsByNumer)
+
+	fmt.Println("\n2.4 Tìm 5 thành phố có nhiều người trong danh sách ở nhất, đếm từ cao xuống thấp")
+	top5CitiesByNumber := Top5CitiesByNumber(people)
+	PrintSliceKeyValue(top5CitiesByNumber)
 }
