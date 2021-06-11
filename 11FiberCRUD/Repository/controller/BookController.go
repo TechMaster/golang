@@ -1,6 +1,9 @@
 package controller
 
 import (
+	"fmt"
+
+	"github.com/TechMaster/golang/08Fiber/Repository/model"
 	repo "github.com/TechMaster/golang/08Fiber/Repository/repository"
 	"github.com/gofiber/fiber/v2"
 )
@@ -19,4 +22,35 @@ func GetBookById(c *fiber.Ctx) error {
 		return c.Status(404).SendString(err.Error())
 	}
 	return c.JSON(book)
+}
+
+func DeleteBookById(c *fiber.Ctx) error {
+	id, err := c.ParamsInt("id")
+	if err != nil {
+		return c.Status(400).SendString(err.Error())
+	}
+	err = repo.Books.DeleteBookById(int64(id))
+	if err != nil {
+		return c.Status(404).SendString(err.Error())
+	} else {
+		return c.SendString("delete successfully")
+	}
+}
+
+func CreateBook(c *fiber.Ctx) error {
+	book := new(model.Book)
+
+	err := c.BodyParser(&book)
+	// if error
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"success": false,
+			"message": "Cannot parse JSON",
+			"error":   err,
+		})
+	}
+
+	bookId := repo.Books.CreateNewBook(book)
+	return c.SendString(fmt.Sprintf("New book is created successfully with id = %d", bookId))
+
 }

@@ -10,4 +10,8 @@ func ConfigBookRouter(router *fiber.Router) {
 	(*router).Get("/", controller.GetAllBook)
 
 	(*router).Get("/:id", controller.GetBookById)
+
+	(*router).Delete("/:id", controller.DeleteBookById)
+
+	(*router).Post("", controller.CreateBook)
 }
