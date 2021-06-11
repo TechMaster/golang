@@ -13,9 +13,9 @@ func ConfigBookRouter(router *fiber.Router) {
 
 	(*router).Delete("/:id", controller.DeleteBookById) //Xoá một bản ghi
 
-	(*router).Post("", controller.CreateBook) //Tạo một bản ghi
+	(*router).Post("", controller.CreateBook) //INSERT: Tạo một bản ghi
 
-	(*router).Patch("", controller.UpdateBook) //Cập nhật một bản ghi
+	(*router).Patch("", controller.UpdateBook) //UPDATE: Cập nhật một bản ghi
 
-	(*router).Put("", controller.UpsertBook) //Cập nhật một bản ghi nếu tìm thấy còn không tạo mới
+	(*router).Put("", controller.UpsertBook) //UPSERT: Cập nhật một bản ghi nếu tìm thấy còn không tạo mới
 }
