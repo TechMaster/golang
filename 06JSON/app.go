@@ -72,4 +72,10 @@ func main() {
 	fmt.Println("\n2.4 Tìm 5 thành phố có nhiều người trong danh sách ở nhất, đếm từ cao xuống thấp")
 	top5CitiesByNumber := Top5CitiesByNumber(people)
 	PrintSliceKeyValue(top5CitiesByNumber)
+
+	fmt.Println("\n2.5 Top Job in Each City")
+	topJobByNumerInEachCity := TopJobByNumerInEachCity(people)
+	for _, topJob := range topJobByNumerInEachCity {
+		fmt.Println(topJob)
+	}
 }

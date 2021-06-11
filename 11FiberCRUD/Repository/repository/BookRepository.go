@@ -84,9 +84,9 @@ func (r *BookRepo) UpdateBook(book *model.Book) error {
 
 func (r *BookRepo) Upsert(book *model.Book) int64 {
 	if _, ok := r.books[book.Id]; ok {
-		r.books[book.Id] = book
+		r.books[book.Id] = book //tìm thấy thì update
 		return book.Id
-	} else {
+	} else { //không tìm thấy thì tạo mới
 		return r.CreateNewBook(book)
 	}
 }

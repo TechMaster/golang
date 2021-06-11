@@ -39,17 +39,30 @@ func Top5CitiesByNumber(p []Person) []KeyValue {
 }
 
 //2.5 Trong mỗi thành phố, hãy tìm ra nghề nào được làm nhiều nhất
-func TopJobByNumerInEachCity(p []Person) []CityJobCount {
+func TopJobByNumerInEachCity(p []Person) (result []CityJobCount) {
 	//Bước 1: GroupPeopleByCity
 	groupPeopleByCity := GroupPeopleByCity(p)
 
 	//Bước 2: tìm nghề nhiều nhất trong một thành phố
 	for city, peopleInCity := range groupPeopleByCity {
-
+		jobHasMaxCount, maxJobCount := TopJobInOneCity(peopleInCity)
+		result = append(result, CityJobCount{City: city, Job: jobHasMaxCount, Count: maxJobCount})
 	}
+	return
 }
 
 //Truyền vào danh sách người trong một thành phố, trả về nghề có số lượng cao nhất
-func TopJobInOneCity(peopleInACity []Person) string {
+func TopJobInOneCity(peopleInACity []Person) (string, int) {
+	jobCountInOneCity := make(map[string]int)
+	jobHasMaxCount := ""
+	maxJobCount := 0
 
+	for _, person := range peopleInACity {
+		jobCountInOneCity[person.Job]++
+		if jobCountInOneCity[person.Job] > maxJobCount {
+			jobHasMaxCount = person.Job
+			maxJobCount = jobCountInOneCity[person.Job]
+		}
+	}
+	return jobHasMaxCount, maxJobCount
 }
