@@ -1,0 +1,2 @@
+# Observer pattern trong Golang
+
