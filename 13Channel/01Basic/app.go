@@ -14,6 +14,7 @@ func main() {
 
 	sub <- "Hey there"*/
 
-	DemoChannelString()
+	//DemoChannelString()
+	DemoChannel2()
 
 }

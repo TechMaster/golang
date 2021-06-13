@@ -4,9 +4,12 @@ import "fmt"
 
 func DemoChannelString() {
 	pipe := make(chan string, 2)
-	pipe <- "water"
-	pipe <- "water"
-	close(pipe)
+	go func() {
+		pipe <- "water"
+		pipe <- "water"
+		close(pipe)
+	}()
+
 	for receiver := range pipe {
 		fmt.Println(receiver)
 	}
