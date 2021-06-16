@@ -1,4 +1,4 @@
-module github.com/TechMaster/golang/08Fiber/Repository
+module github.com/TechMaster/golang/11FiberCRUD/Repository
 
 go 1.16
 

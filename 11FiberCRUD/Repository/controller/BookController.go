@@ -3,13 +3,13 @@ package controller
 import (
 	"fmt"
 
-	"github.com/TechMaster/golang/08Fiber/Repository/model"
-	repo "github.com/TechMaster/golang/08Fiber/Repository/repository"
+	"github.com/TechMaster/golang/11FiberCRUD/Repository/model"
+	repo "github.com/TechMaster/golang/11FiberCRUD/Repository/repository"
 	"github.com/gofiber/fiber/v2"
 )
 
 func GetAllBook(c *fiber.Ctx) error {
-	return c.JSON(repo.Books.GetAllBooks())
+	return c.JSON(repo.BookRepo.GetAllBooks())
 }
 
 func GetBookById(c *fiber.Ctx) error {
@@ -17,7 +17,7 @@ func GetBookById(c *fiber.Ctx) error {
 	if err != nil {
 		return c.Status(400).SendString(err.Error())
 	}
-	book, err := repo.Books.FindBookById(int64(id))
+	book, err := repo.BookRepo.FindBookById(int64(id))
 	if err != nil {
 		return c.Status(404).SendString(err.Error())
 	}
@@ -29,11 +29,11 @@ func DeleteBookById(c *fiber.Ctx) error {
 	if err != nil {
 		return c.Status(400).SendString(err.Error())
 	}
-	err = repo.Books.DeleteBookById(int64(id))
+	err = repo.BookRepo.DeleteBookById(int64(id))
 	if err != nil {
 		return c.Status(404).SendString(err.Error())
 	} else {
-		return c.SendString("delete successfully")
+		return c.SendString("delete book successfully")
 	}
 }
 
@@ -50,7 +50,7 @@ func CreateBook(c *fiber.Ctx) error {
 		})
 	}
 
-	bookId := repo.Books.CreateNewBook(book)
+	bookId := repo.BookRepo.CreateNewBook(book)
 	return c.SendString(fmt.Sprintf("New book is created successfully with id = %d", bookId))
 
 }
@@ -68,7 +68,7 @@ func UpdateBook(c *fiber.Ctx) error {
 		})
 	}
 
-	err = repo.Books.UpdateBook(updatedBook)
+	err = repo.BookRepo.UpdateBook(updatedBook)
 	if err != nil {
 		return c.Status(404).SendString(err.Error())
 	}
@@ -90,6 +90,6 @@ func UpsertBook(c *fiber.Ctx) error {
 		})
 	}
 
-	id := repo.Books.Upsert(book)
+	id := repo.BookRepo.Upsert(book)
 	return c.SendString(fmt.Sprintf("Book with id = %d is successfully upserted", id))
 }

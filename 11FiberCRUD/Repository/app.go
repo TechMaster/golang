@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/TechMaster/golang/08Fiber/Repository/routes"
+	"github.com/TechMaster/golang/11FiberCRUD/Repository/routes"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -22,5 +22,7 @@ func main() {
 	bookRouter := app.Group("/api/book")
 	routes.ConfigBookRouter(&bookRouter) //http://localhost:3000/api/book
 
+	reviewRouter := app.Group("/api/review")
+	routes.ConfigReviewRouter(&reviewRouter)
 	app.Listen(":3000")
 }
