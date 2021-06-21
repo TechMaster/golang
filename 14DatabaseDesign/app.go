@@ -2,35 +2,45 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
 
 	_ "github.com/go-sql-driver/mysql"
 )
 
 func main() {
-	fmt.Println("Go MySQL Tutorial")
-
-	//userid: demo
-	//pass: toiyeuhanoi123-
-	//database: demo
 	db, err := sql.Open("mysql", "demo:toiyeuhanoi123-@tcp(127.0.0.1:3306)/demo")
-
-	// if there is an error opening the connection, handle it
 	if err != nil {
 		panic(err.Error())
 	}
-
-	// defer the close till after the main function has finished
-	// executing
 	defer db.Close()
 
-	insert, err := db.Query("INSERT INTO country (code, name) VALUES ('VN', 'Viet nam')")
-	insert, err = db.Query("INSERT INTO country (code, name) VALUES ('CN', 'China')")
+	categories := map[string]([]string){
+		"điện thoại, máy tính bảng": []string{"smart phone", "điện thoại phổ thông", "máy tính bảng", "máy đọc sách"},
+		"điện tử, điện lạnh": []string{"tivi", "dàn âm thanh", "tủ lạnh - tủ mát", "máy điều hoà", "phụ kiện điện lạnh", "máy giặt", "hút bụi", "lọc không khí", "rủa bát"},
+		"máy tính, laptop": []string{"desktop", "server", "laptop", "phụ kiện máy tính"},
+		"camera, camcoder": []string{"máy ảnh", "máy ảnh kỹ thuật số", "máy quay phim", "camera giám sá", "camera hành trình", "balo", "ống kính"},
+		"đồ bếp":           []string{"lò vi sóng", "máy say sinh tố", "máy đánh trứng", "bếp từ", "bếp hồng ngoại", "bếp ga"},
+	}
 
-	// if there is an error inserting, handle it
+	statement, err := db.Prepare("INSERT INTO category (name, parent_id) VALUES (?, ?)")
 	if err != nil {
 		panic(err.Error())
 	}
-	// be careful deferring Queries if you are using transactions
-	defer insert.Close()
+	defer statement.Close()
+
+	for key, subcategories := range categories {
+		result, err := statement.Exec(key, nil)
+		if err != nil {
+			panic(err.Error())
+		}
+
+		id, err := result.LastInsertId()
+
+		for _, subcat := range subcategories {
+			_, err = statement.Exec(subcat, id)
+		}
+		if err != nil {
+			panic(err.Error())
+		}
+	}
+
 }
