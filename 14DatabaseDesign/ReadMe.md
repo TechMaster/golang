@@ -5,7 +5,7 @@ Cài đặt Docker Desktop  [https://www.docker.com/products/docker-desktop](htt
 ## Lab 2: Tạo MySQL Docker Container
 Chạy câu lệnh terminal này.
 ```
- docker run --name mydb -e MYSQL_ROOT_PASSWORD=abc123 -d mysql:latest
+ docker run --name mydb -e MYSQL_ROOT_PASSWORD=abc123 -d -p 3360:3360 mysql:latest
 ```
 
 Giải thích:
@@ -13,6 +13,7 @@ Giải thích:
 * `--name mydb`: đặt tên container
 * `-e MYSQL_ROOT_PASSWORD=abc123`: đặt tham số password của tài khoản root trong mysql
 * `-d`: chỉ định container chạy ở chế độ daemon (chế độ chạy background)
+* `-p 3360:3360`: mở cổng 3360 từ bên ngoài nối vào cổng 3360 của container bên trong.
 
 
 
