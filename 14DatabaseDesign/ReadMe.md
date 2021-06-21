@@ -5,7 +5,7 @@ Cài đặt Docker Desktop  [https://www.docker.com/products/docker-desktop](htt
 ## Lab 2: Tạo MySQL Docker Container
 Chạy câu lệnh terminal này.
 ```
- docker run --name mydb -e MYSQL_ROOT_PASSWORD=abc123 -d -p 3360:3360 mysql:latest
+docker run --name mydb -e MYSQL_ROOT_PASSWORD=abc123 -d -p 3306:3306 mysql:latest
 ```
 
 Giải thích:
@@ -13,9 +13,13 @@ Giải thích:
 * `--name mydb`: đặt tên container
 * `-e MYSQL_ROOT_PASSWORD=abc123`: đặt tham số password của tài khoản root trong mysql
 * `-d`: chỉ định container chạy ở chế độ daemon (chế độ chạy background)
-* `-p 3360:3360`: mở cổng 3360 từ bên ngoài nối vào cổng 3360 của container bên trong.
+* `-p 3306:3306`: mở cổng 3306 từ bên ngoài nối vào cổng 3306 của container bên trong.
 
+### Chú ý về  bảo mật:
 
+Sau khi kết nối vào database sử dụng user root, tạo ra một database có tên tuỳ thích ví dụ: shop, demo, mydb... Các bạn cần tạo ra một user mới. Gán quyền truy cập, thực hiện query, thao tác dữ liệu cho user mới riêng đối với database mới tạo. Từ sau, chỉ kết nối với user mới thôi.
+
+root có quyền tối cao, khi kết nối hay expose root quá nhiều, nguy cơ bị chiếm quyền kiểm soát lên database rất nguy hiểm.
 
 ## Lab 3: Kết nối đến CSDL dữ liệu MySQL
 
