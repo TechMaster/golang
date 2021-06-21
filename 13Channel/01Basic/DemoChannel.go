@@ -17,7 +17,7 @@ func DemoChannel0() {
 	pipe <- "water 1"
 	pipe <- "water 2"
 	pipe <- "water 3"
-	close(pipe)
+	//close(pipe)
 	time.Sleep(time.Millisecond)
 }
 
