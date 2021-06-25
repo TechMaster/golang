@@ -162,12 +162,27 @@ func InitMasterData() {
 }
 ```
 
-### Mô hình hoá bảng và nhập dữ liệu như thế nào để lập trình hiệu suất nhất?
+### 5.1 Mô hình hoá bảng và nhập dữ liệu như thế nào để lập trình hiệu suất nhất?
 
 1. Hãy đi từ những bảng Master, ít trường dữ liệu, khi tạo dữ liệu khả năng gây lỗi ít nhất
 2. Mỗi phương thức chỉ tập trung nhập dữ liệu cho một bảng thôi.
 3. Bật tắt khi chạy từng phương thức để dễ dàng tìm ra lỗi.
 4. Viết đoạn script để chỉ cần chạy một lần là tạo tất cả các bảng hoặc xoá tất cả các bảng. Đừng gõ lệnh thủ công mất thời gian.
 5. Code prototype thường để ra nhanh sản phẩm: việc check lỗi, bắt ngoại lệ thường rất ẩu. Hãy chú ý điều này để bổ xung logic xử lý lỗi ngay sau khi main flow (luồng chạy chính) đã hoàn thành. Lập trình là một quá trình cải tiến liên tục lặp đi lặp lại (Sprint)
+  
+### 5.2 Hai cách để thiết kế CSDL: Database First vs Code First
+
+1. Database First: dùng dbdiagram.io code cấu trúc bảng, rồi sinh ra file SQL. Sau đó định nghĩa Golang struct tương ứng bảng trong CSDL. Do tôi dùng GORM nên tên bảng, tên cột tôi tuân thủ đúng quy ước của GORM. Như vậy việc đọc ghi dữ liệu rất thuận lợi.
+2. Code First: định nghĩa model bằng Golang struct, bổ xung các chú thích đặc thù của gorm rồi sinh ra DDL. Trong GORM, gọi là kỹ thuật [migration](https://gorm.io/docs/migration.html)
+
+Hỏi: cách nào hay, cách nào dở?
+
+Đáp: Database First phù hợp với những bạn đang quen lập trình CSDL, cần vẽ ra cấu trúc quan hệ bảng một cách trực quan hoặc muốn kiểm soát việc tạo bảng, tạo các quan hệ, đánh chỉ mục tỷ mỷ nhất theo ý đồ của mình.
+
+Còn Code First kết hợp với việc lưu phiên bản qua những lần Git commit cho chúng ta nhìn lịch sử thay đổi từ từ của cả quá trình phát triển. Để dùng Code First bạn phải nắm vững GORM, xây dựng quy trình commit code rất kỹ. Nhưng lâu dài khi CSDL phức tạp hơn, không thể lúc nào bạn cũng có thể xoá toàn bộ cấu trúc bảng đi tạo lại thì Code First sẽ tốt hơn.
+
+Tạm thời lúc này hãy dùng Database First các bạn nhé !
+
+
 
 
