@@ -30,8 +30,8 @@ Dự án này nâng cấp những điểm sau đây từ buổi trước
 ├── routes <-- Cấu hình định tuyến các request đến ứng với phương thức của Controller`
 │   └── ConfigRouter.go
 ├── sql <-- Lưu các file SQL script tạo bảng và xoá bảng
-│   ├── DropTable.sql
-│   └── OnlineShop.sql
+│   ├── DropTable.sql  <-- Tạo cấu trúc bảng
+│   └── OnlineShop.sql <-- Drop các bảng
 ├── app.go <-- File chạy chính
 ├── dev.yml <-- File cấu hình ở môi trường development
 ├── go.mod
@@ -139,5 +139,35 @@ CREATE TABLE `products` (
   `category_id` int
 );
 ```
+
+## 5. Phong cách lập trình ứng dụng là kiểu gì vậy?
+
+Khi xây dựng một ứng dụng chúng ta trải qua nhiều thời kỳ:
+1. Phân tích thiết kế
+2. Code thử nghiệm (Prototype) khi nhiều thành phần khác, dữ liệu chưa hoàn thiện
+3. Code hoàn thiện
+4. Code bảo trì, cải tiến, nâng cấp
+
+Để bảo vệ đồ án lần 1 vào thứ 4 tuần tới, các bạn xác định chúng ta đang giai đoạn Prototype.
+Đừng quá cầu toàn, đòi hỏi mọi thứ hoàn hảo. Dữ liệu bảng master không cần tạo form, API để nhập mà viết code thủ công để tạo.
+
+Hãy xem file [repo/Repo.go](repo/Repo.go), bạn sẽ thấy phương thức `InitMasterData`
+
+```go
+func InitMasterData() {
+	initCountry()
+	initCategory()
+	initManufacturer()
+  initProduct()
+}
+```
+
+### Mô hình hoá bảng và nhập dữ liệu như thế nào để lập trình hiệu suất nhất?
+
+1. Hãy đi từ những bảng Master, ít trường dữ liệu, khi tạo dữ liệu khả năng gây lỗi ít nhất
+2. Mỗi phương thức chỉ tập trung nhập dữ liệu cho một bảng thôi.
+3. Bật tắt khi chạy từng phương thức để dễ dàng tìm ra lỗi.
+4. Viết đoạn script để chỉ cần chạy một lần là tạo tất cả các bảng hoặc xoá tất cả các bảng. Đừng gõ lệnh thủ công mất thời gian.
+5. Code prototype thường để ra nhanh sản phẩm: việc check lỗi, bắt ngoại lệ thường rất ẩu. Hãy chú ý điều này để bổ xung logic xử lý lỗi ngay sau khi main flow (luồng chạy chính) đã hoàn thành. Lập trình là một quá trình cải tiến liên tục lặp đi lặp lại (Sprint)
 
 
