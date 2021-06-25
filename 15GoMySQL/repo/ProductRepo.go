@@ -17,7 +17,7 @@ func initProduct() {
 		Name:         "Sony WH-1000XM4",
 		Description:  "Tai nghe chống ổn chủ động thế hệ 3 của Sony, hiệu suất giảm tạp âm lên đến 95%",
 		Price:        5500000,
-		Madein:       "CN",
+		Madein:       "ML",
 		Manufacturer: &sony,
 		Category:     &taiNge_Cat,
 	}

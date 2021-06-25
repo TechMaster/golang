@@ -16,6 +16,7 @@ func initCountry() {
 		"JP": "Japan",
 		"IT": "Italy",
 		"RU": "Russia",
+		"ML": "Malaysia",
 	}
 
 	for country_code, country_name := range countries {
