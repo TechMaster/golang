@@ -4,7 +4,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-var Config Configuration
+var Config Configuration  //Biến toàn cục lưu cấu hình
 
 type Configuration struct {
 	Db DBConf
@@ -18,7 +18,7 @@ type DBConf struct {
 	Database string
 }
 
-func LoadConfig() (config Configuration, err error) {
+func LoadConfig() (err error) {
 	viper.AddConfigPath(".")
 	viper.SetConfigName("dev")
 	viper.SetConfigType("yaml")
@@ -30,6 +30,6 @@ func LoadConfig() (config Configuration, err error) {
 		return
 	}
 
-	err = viper.Unmarshal(&config)
+	err = viper.Unmarshal(&Config)
 	return
 }

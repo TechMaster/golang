@@ -72,7 +72,7 @@ type DBConf struct {  // tương đương với các thẻ con bên dưới th�
 
 Hàm đọc thông tin từ file yaml rồi đổ vào struct Configuration
 ```go
-func LoadConfig() (config Configuration, err error) {
+func LoadConfig() (err error) {
 	viper.AddConfigPath(".")
 	viper.SetConfigName("dev")
 	viper.SetConfigType("yaml")
@@ -84,7 +84,7 @@ func LoadConfig() (config Configuration, err error) {
 		return
 	}
 
-	err = viper.Unmarshal(&config)
+	err = viper.Unmarshal(&Config)
 	return
 }
 ```
@@ -92,10 +92,52 @@ func LoadConfig() (config Configuration, err error) {
 Trong hàm ```main``` của file [app.go](app.go) gọi phương thức `LoadConfig()` thôi
 ```go
 func main() {
-	conf, err := config.LoadConfig()
+	err := config.LoadConfig() //Đọc cấu hình từ file dev.yml đổ vào biến toàn cục config.Config
 	if err != nil {
 		panic(err.Error())
 	}
+	repo.Connect(config.Config) //Truyền cấu hình vào phương thức Connect của package repo
 }
 ```
+
+## 4. Sử dụng GORM để thao tác dữ liệu
+
+Lập trình bằng GORM có gì hay so với lập trình MySQL thuần?
+
+* Code viết ngắn và gọn hơn cách cũ. Truy vấn MySQL thuần xong phải gán từng trường vào biến, rồi từ biến tạo thành struct...
+* Lập trình hướng đối tượng thay vì hướng câu lệnh SQL
+* Có thể định nghĩa cấu trúc bảng qua Golang Struct
+
+Trong dự án này, tôi vẫn sử dụng https://dbdiagram.io/ để sinh ra DDL script (DDL = Data Definition Language). Tuy nhiên tôi tuân thủ quy ước của GORM:
+
+1. Tên bảng là danh từ số nhiều, các các từ bằng dấu `_` (snake_case) ví dụ: `product_prices`, `relate_products`
+2. Khoá chính, primary, mặc định có tên là `ID` kiểu unsigned integer. Có trường hợp đặc biệt vẫn customize được.
+3. Tên các cột chữ thường, sử dụng snake_case
+
+Code trong dbdiagram.io
+```
+Table products {
+  ID int [pk, increment]
+  name varchar [not null]
+  description varchar [not null]
+  madein varchar(2) [ref: > countries.code]
+  price int
+  manufacturer_id int [ref: > manufacturers.ID]
+  category_id int [ref: > categories.ID]
+}
+```
+sẽ sinh ra DDL script như dưới
+
+```sql
+CREATE TABLE `products` (
+  `ID` int PRIMARY KEY AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `madein` varchar(2),
+  `price` int,
+  `manufacturer_id` int,
+  `category_id` int
+);
+```
+
 

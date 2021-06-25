@@ -9,11 +9,11 @@ import (
 )
 
 func main() {
-	conf, err := config.LoadConfig()
+	err := config.LoadConfig()
 	if err != nil {
 		panic(err.Error())
 	}
-	repo.Connect(conf)
+	repo.Connect(config.Config)
 	repo.InitMasterData()
 
 	app := fiber.New(fiber.Config{
