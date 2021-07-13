@@ -1,33 +1,67 @@
-# Chương trình đào tạo lập trình viên full stack Golang + Vue.js
+# Golang 
 
-Thời gian: 24 buổi = 14 buổi Golang (Gorilla Mux, MySQL, RabbitMQ) + 10 buổi HTML,CSS, JavaScript, Vue.js 3
+Yêu cầu đầu vào:
+1. Sinh viên cần sử dụng hệ điều hành Linux hoặc Mac để lập trình Golang
+2. 
+## 01. Cài đặt môi trường - công cụ và nhập môn
+- Cài đặt Golang
+- Sử dụng VSCode viết ứng dụng Golang đầu tiên
+- In ra màn hình
+- Tạo go module
+- Khai báo biến: kiểu biến, gán, gán biến tự đoán kiểu
+- Các kiểu căn bản. Ép kiểu
+- Biến toàn cục vs cục bộ
+- Khai báo hàm
+- Hàm có nhiều tham số
+- Hàm trả về nhiều giá trị, đặt tên biến trả về
+- Hàm variadic params
+- Closure (anonymous function)
+- Recursion
+- Debug
 
-**Giảng viên**: Techmaster team
-**Học viên**: là những lập trình viên trẻ có 6-12 tháng kinh nghiệm lập trình Java hoặc JavaScript, Python.
+#### Bài tập
+- Tìm số nguyên tố
+- Tính giai thừa
+- In chuỗi fibonacci
 
-**Sách tham khảo**:
-- Golang in Action
-- Concurrency In Go
-- Network Programming In Go
+## 02. Golang căn bản
+- Chữa Bài
+- Public vs Private
+- package và import package
+- Con trỏ và lấy địa chỉ biến
+- Struct: khởi tạo, truyền vào hàm
+- Array
+- Slice và thao tác trên Slice
+- Map và thao tác trên Map
+#### Bài tập
+- Phân tích dữ liệu trên file json
 
-## Yêu cầu đối với giáo trình
+## 03. Interface - String
+- Chữa bài tập buổi 02
+- Interfaces: khác biệt giữa Java và Golang
+- Pointer Receiver vs Value Receiver
+- Đọc file
+- Các thao tác xử lý chuỗi: biến đổi, tìm kiếm, lấy một phần
 
-1. Cấu trúc thư mục sẽ được đánh số theo buổi 01,02,03 và công nghệ Go hoặc Vue
-   ```
-    ├── Go01-LearnGoByExamples
-    ├── Go02-Packages
-    ├── Go03-Concurrency
-    ├── Vue01-HTMLByExamples
-    └── ReadMe.md
-   ```
-2. Trong mỗi thư mục tương ứng với một buổi học, nhất thiết phải có file ReadMe.md, giải thích chi tiết nội dung thực hành trong buổi học.
-3. Khuyến khích giảng viên sử dụng draw.io để vẽ diagram minh hoạ.
-4. Mỗi buổi học cần có:
-   - 3-5 ví dụ cực kỳ đơn giản, chắc chắn chạy được ngay trên lớp
-   - 1 ví dụ nâng cao
-   - 1 bài tập về nhà cho sinh viên làm
+#### Bài tập
+- Đọc file đếm từ
+- Mô phỏng
 
-## Yêu cầu đối với giảng viên
-1. Cần code ví dụ mẫu tuân thủ clean code (đừng code ẩu !)
-2. Giải thích rõ ràng bằng comment trực tiếp trong code
-3. 
+## 04. Regular Expression - Package regexp
+- Giải đáp bài tập lần trước
+- Quy tắc viết Regular Expression
+- package regexp
+
+- Thực hành sử dụng package regexp
+
+## 05. Thao tác file / folder
+- Thao tác file / folder
+- Exc
+- Networking
+
+
+## Reading List
+https://github.com/ardanlabs/gotraining/tree/master/reading
+
+Thread Safe Counting
+https://brunocalza.me/there-are-many-ways-to-safely-count/

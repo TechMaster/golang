@@ -4,7 +4,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-var Config Configuration  //Biến toàn cục lưu cấu hình
+var Config Configuration //Biến toàn cục lưu cấu hình
 
 type Configuration struct {
 	Db DBConf
@@ -30,6 +30,6 @@ func LoadConfig() (err error) {
 		return
 	}
 
-	err = viper.Unmarshal(&Config)
+	err = viper.Unmarshal(&Config) //Unmarshal(deserialize) ngược lại Marshal (Serialize)
 	return
 }
