@@ -9,7 +9,6 @@
 2. Cần biết hoặc sẽ phải tự học Docker, Docker Compose, Docker Swarm
 
 
-
 ## 01. Cài đặt môi trường - công cụ và nhập môn
 - Cài đặt Golang
 - Sử dụng VSCode viết ứng dụng Golang đầu tiên
@@ -87,10 +86,14 @@ Hãy sử dụng thư viện này https://github.com/xlab/treeprint và bài vi�
 - [gotests](https://github.com/cweill/gotests): gotests makes writing Go tests easy. It's a Golang commandline tool that generates table driven tests based on its target source files' function and method signatures. Any new dependencies in the test files are automatically imported.
 - [Benchmark Golang Code](https://tutorialedge.net/golang/benchmarking-your-go-programs/)
 
-## 08. Package phổ biến trong Go
+## 08. Package phổ biến trong Go (2 buổi)
 - [Go cron](https://github.com/go-co-op/gocron) định thời chạy tác vụ
 - [Uber Zap](https://github.com/uber-go/zap) logging
 - [Viber configuration](https://github.com/spf13/viper) cấu hình
+- [Cobra](https://github.com/spf13/cobra)
+- [Pterm](https://github.com/pterm/pterm)
+
+Bài tập thực hành
 
 ## 09. Resty Client
 - HTTP Verbs: GET, POST, PUT, DELETE
@@ -107,10 +110,18 @@ Hãy sử dụng thư viện này https://github.com/xlab/treeprint và bài vi�
 - Router - Routing - Group
 - Middle ware
 - Custom middle ware
-## 11. GORM (2 buổi)
 
-## 12. Go Swagger (1 buổi)
+## 11. Go Swagger (1 buổi)
+
+## 12. GORM (2 buổi)
+- Định nghĩa Model
+- Quan hệ 1:nhiều, nhiều:nhiều
+- Thêm sửa xoá truy vấn
+- Transaction
+
 ## 13. JWT (1 buổi)
+- [Securing Your Go REST APIs With JWTs](https://tutorialedge.net/golang/authenticating-golang-rest-api-with-jwts/)
+
 
 ## 14. SOLID Pattern
 - [SOLID principle in GO](https://s8sg.medium.com/solid-principle-in-go-e1a624290346)
@@ -119,11 +130,11 @@ Hãy sử dụng thư viện này https://github.com/xlab/treeprint và bài vi�
 - [SOLID principles in Golang](https://github.com/ammorteza/SOLID-principles-in-Golang)
 - [Design Patterns-Seven Design Principles for Golang](https://www.programmersought.com/article/46554309204/)
 
+## 15. Design Patterns In Go (2 buổi)
+- Creational Patterns
+- Structural Patterns
+- Behavioral Patterns
 
-## 14. OAuth Single Signon
-https://www.ory.sh/hydra/docs/5min-tutorial/
-https://medium.com/scum-gazeta/golang-oauth2-openid-d69d09cb84db
-https://yusufs.medium.com/practical-example-of-implementing-oauth-2-0-using-ory-hydra-fbaa2765d94f
 
 
 ## Reading List
