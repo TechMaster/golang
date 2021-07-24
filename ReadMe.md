@@ -104,7 +104,7 @@ Bài tập thực hành
 - [An introduction to REST API testing in Go with Resty](https://www.ontestautomation.com/an-introduction-to-rest-api-testing-in-go-with-resty/)
 
 
-## 10. Fiber (2 buổi)
+## 10. Fiber (3 buổi)
 - Application
 - Application Context
 - Router - Routing - Group
