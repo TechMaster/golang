@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"strconv"
+
+	"github.com/TechMaster/golang/01Basic/01Variable/util"
 )
 
 //Khai báo biến toàn cục (global variable)
@@ -22,6 +24,8 @@ func main() {
 
 	current_year = 2021
 	fmt.Printf("%s %d\n", company_name, current_year)
+
+	fmt.Println(demoString)
+	fmt.Println(util.UtilString)
+	fmt.Println(util.utilString)
 }
-
-
