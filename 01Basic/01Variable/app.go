@@ -27,5 +27,5 @@ func main() {
 
 	fmt.Println(demoString)
 	fmt.Println(util.UtilString)
-	fmt.Println(util.utilString)
+	//fmt.Println(util.utilString)
 }

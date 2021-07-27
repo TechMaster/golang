@@ -1,4 +1,4 @@
 package util
 
-var UtilString = "Util String"
-var utilString = "util String"
+var UtilString = "Util String" //Global scope
+var utilString = "util String" //local scope
