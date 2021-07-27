@@ -3,20 +3,27 @@ package main
 import "fmt"
 
 type Person struct {
-	FirstName string
+	FirstName string //kiểu đứng sau tên biến
 	LastName  string
 	Age       int
 }
 
+//Truyền vào con trỏ tham chiếu
 func (p *Person) FullName() string {
+	fmt.Printf("%p\n", p) //In ra địa chỉ trong vùng nhớ của con trỏ p
+	p.Age = 100
 	return p.FirstName + " " + p.LastName
 }
 
+//Truyền vào biến
 func (p Person) String() string {
+	fmt.Printf("%p\n", &p) //In ra địa chỉ trong vùng nhớ của biến p
+	p.Age = 200
+	fmt.Println("Tuổi bên trong hàm", p.Age)
 	return fmt.Sprintf("%v is %v years old", p.FullName(), p.Age)
 }
 
-func NewPerson(firstName string, lastName string, age int) *Person {
+func NewAPerson(firstName string, lastName string, age int) *Person {
 	if age < 0 {
 		return nil
 	}
