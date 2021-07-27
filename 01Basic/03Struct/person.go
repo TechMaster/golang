@@ -6,21 +6,27 @@ type Person struct {
 	FirstName string //kiểu đứng sau tên biến
 	LastName  string
 	Age       int
+	Address1  Address  //value
+	Address2  *Address //pointer
+}
+
+type Address struct {
+	Country string
+	City    string
 }
 
 //Truyền vào con trỏ tham chiếu
 func (p *Person) FullName() string {
-	fmt.Printf("%p\n", p) //In ra địa chỉ trong vùng nhớ của con trỏ p
+	fmt.Printf("pointer receiver %p\n", p) //In ra địa chỉ trong vùng nhớ của con trỏ p
 	p.Age = 100
 	return p.FirstName + " " + p.LastName
 }
 
 //Truyền vào biến
 func (p Person) String() string {
-	fmt.Printf("%p\n", &p) //In ra địa chỉ trong vùng nhớ của biến p
+	fmt.Printf("value receiver : %p\n", &p) //In ra địa chỉ trong vùng nhớ của biến p
 	p.Age = 200
-	fmt.Println("Tuổi bên trong hàm", p.Age)
-	return fmt.Sprintf("%v is %v years old", p.FullName(), p.Age)
+	return fmt.Sprintf("%v is %v years old", p.FirstName, p.Age)
 }
 
 func NewAPerson(firstName string, lastName string, age int) *Person {

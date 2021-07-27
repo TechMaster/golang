@@ -3,13 +3,18 @@ package main
 import "fmt"
 
 func main() {
-	person := Person{"Trinh", "Cuong", 45}
+	person := Person{"Trinh", "Cuong", 45,
+		Address{"Vietnam", "Hanoi"},
+		&Address{"USA", "California"}}
+
+	fmt.Printf("Địa chỉ con trỏ ban đầu %p\n", &person)
+
 	fmt.Println(person.FullName())
 
-	fmt.Println(person.Age)
+	//fmt.Println(person.Age)
 
 	fmt.Println(person.String())
-	fmt.Println(person.Age)
+	//fmt.Println(person.Age)
 
 	//Sử dụng constructor. Trong Golang có cú pháp constructor chuẩn
 	//mà lập trình viên tự định nghĩa constructor
