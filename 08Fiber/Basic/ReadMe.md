@@ -1,123 +1,39 @@
-# Căn bản với Fiber
+# Hướng dẫn xử lý lỗi trong Iris và Fiber
+## Trả về lỗi xuất ra giao diện người dùng cuối
 
-## 1. Khởi tạo dự án
+Ý tưởng chung là các hàm trong Controller, Package chỉ cần trả về err
 
-```
-$ mkdir BASIC
-$ cd BASIC
-$ go mod init github.com/TechMaster/golang/08Fiber/Basic
-$ go get github.com/gofiber/fiber/v2
-```
 
-## 2. Tạo ứng dụng Fiber đơn giản app.go
+
+
+file main.go sẽ có hàm Custom Error Handler xử lý
 ```go
-package main
-
-import "github.com/gofiber/fiber/v2"
-
-func main() {
-	app := fiber.New()
-
-	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Hello, World 👋!")
-	})
-
-	app.Listen(":3000")
-}
+app := fiber.New(
+  fiber.Config{
+    Views:        html.New("./views", ".html"),
+    ErrorHandler: CustomErrorHandler, //Đăng ký hàm xử lý lỗi ở đây
+  },
+)
 ```
 
-## 3. Refactor code bằng cách khai báo hàm xử lý request
-
-Thay vì viết function anonymous kiểu này
-```go
-app.Get("/", func(c *fiber.Ctx) error {
-	return c.SendString("Hello, World 👋!")
-})
+Hàm xử lý `CustomErrorHandler`
 ```
+func CustomErrorHandler(ctx *fiber.Ctx, err error) error {
+	var statusCode = 500
 
-chuyển sang viết thành 
-```go
-app.Get("/", hello)
+	if e, ok := err.(*fiber.Error); ok { //Thử kiểm tra xem có phải là kiểu fiber.Error không
+		statusCode = e.Code
+	} else if e, ok := err.(*errors.Error); ok { //Thử kiểm tra xem có phải là kiểu errors.Error
+		statusCode = e.Code
+	}
 
-func hello(c *fiber.Ctx) error {
-	return c.SendString("Hello, World 👋!")
-}
-```
+	if err = ctx.Render("error", fiber.Map{
+		"ErrorMessage": err.Error(),
+		"StatusCode":   statusCode,
+	}); err != nil {
+		return ctx.Status(500).SendString("Internal Server Error")
+	}
 
-## 4. Tham số đường dẫn ```/:name```
-Bổ xung ```app.Get("/:name", sayName) // GET /john```
-
-```go
-func main() {
-	app := fiber.New()
-
-	app.Get("/", hello)
-
-	app.Get("/:name", sayName) // GET /john
-
-	app.Listen(":3000")
-}
-
-func hello(c *fiber.Ctx) error {
-	return c.SendString("Hello, World 👋!")
-}
-
-func sayName(c *fiber.Ctx) error {
-	msg := fmt.Sprintf("Hello, %s 👋!", c.Params("name"))
-	return c.SendString(msg) // => Hello john 👋!
+	return nil
 }
 ```
-Thử vào http://localhost:3000/John, kết quả in ra
-
-Hello, John 👋!
-
-## 5. Escape và Unescape URL
-
-
-Thử vào http://localhost:3000/Cường, kết quả in ra
-
-Hello, C%C6%B0%E1%BB%9Dng 👋!
-
-Tham số đường dẫn đã bị escape các ký tự unicode. 
-Hỏi: Tại sao cần escape URL?
-Trả lời trích từ trang [https://www.freecodecamp.org](https://www.freecodecamp.org/news/javascript-url-encode-example-how-to-use-encodeuricomponent-and-encodeuri/)
-> URLs can only have certain characters from the standard 128 character ASCII set. ... This means that we need to encode these characters when passing into a URL. Special characters such as & , space , ! when entered in a url need to be escaped, otherwise they may cause unpredictable situations
-
-Sửa lại như sau
-```go
-func sayName(c *fiber.Ctx) error {
-	name, err := url.PathUnescape(c.Params("name"))
-	fmt.Println(err)
-	fmt.Println(name)
-
-	msg := fmt.Sprintf("Hello, %s 👋!", name)
-	return c.SendString(msg) // => Hello john 👋!
-}
-```
-Hello, Cường 👋!
-
-## 6. Đăng ký nhiều hàm xử lý request cho cùng một đường dẫn
-
-Định nghĩa của hàm ```func (app *App) Get``` như sau
-```go
-func (app *App) Get(path string, handlers ...Handler) Router {
-	return app.Add(MethodHead, path, handlers...).Add(MethodGet, path, handlers...)
-}
-```
-
-Chúng ta thấy ```handlers ...Handler``` có nghĩa hàm này sẽ nhận 1 hoặc nhiều handler (variadic function)
-
-```go
-app.Get("/bye/:name", log, bye)
-
-func log(c *fiber.Ctx) error {
-	fmt.Println("Log: " + c.Params("name"))
-	return c.Next()
-}
-
-func bye(c *fiber.Ctx) error {
-	msg := fmt.Sprintf("good bye %s 👋!", c.Params("name"))
-	return c.SendString(msg) // => good bye john 👋!
-}
-```
-
