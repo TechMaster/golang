@@ -1,0 +1,26 @@
+settings:
+  legacy:
+    force: false
+    interval: 0s
+schema:
+- name: mainsite
+  path: .
+  commands: 
+    install:
+      status: true
+      method: go build -o tmp/app.out
+    run:
+      status: true 
+      method: tmp/app.out
+  watcher:
+    extensions:
+    - go
+    paths:
+    - /
+    ignore:
+      paths:
+      - .git
+      - .realize
+      - vendor
+      - view
+      - tmp

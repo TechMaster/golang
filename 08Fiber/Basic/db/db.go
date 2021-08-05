@@ -1,11 +1,9 @@
 package db
 
 import (
-	"errors"
-	"fmt"
+	"github.com/rotisserie/eris"
 )
 
 func Query(query string) error {
-	fmt.Println("Làm một số thao tác truy vấn")
-	return errors.New("query string is bad") //Ở đây dùng package chuẩn error
+	return eris.New("query string is bad")
 }

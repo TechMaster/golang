@@ -3,10 +3,11 @@ package main
 import (
 	"demofiber/controller"
 	"demofiber/errors"
-	"demofiber/logger"
+	"fmt"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html"
+	"github.com/rotisserie/eris"
 ) //import thư viện fiber version 2
 
 func main() {
@@ -84,7 +85,18 @@ func CustomErrorHandler(ctx *fiber.Ctx, err error) error {
 		statusCode = e.Code
 	}
 
-	logger.Log.Error(err)
+	formattedStr := eris.ToCustomString(err, eris.StringFormat{
+		Options: eris.FormatOptions{
+			InvertOutput: true, // flag that inverts the error output (wrap errors shown first)
+			WithTrace:    true, // flag that enables stack trace output
+			InvertTrace:  true, // flag that inverts the stack trace output (top of call stack shown first)
+		},
+		MsgStackSep:  "\n",  // separator between error messages and stack frame data
+		PreStackSep:  "\t",  // separator at the beginning of each stack frame
+		StackElemSep: " | ", // separator between elements of each stack frame
+		ErrorSep:     "\n",  // separator between each error in the chain
+	})
+	fmt.Println(formattedStr)
 
 	if err = ctx.Render("error", fiber.Map{
 		"ErrorMessage": err.Error(),
