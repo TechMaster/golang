@@ -2,7 +2,6 @@ package main
 
 import (
 	"demofiber/controller"
-	"demofiber/errors"
 	"fmt"
 
 	"github.com/gofiber/fiber/v2"
@@ -44,18 +43,18 @@ func homepage(c *fiber.Ctx) error {
 }
 
 func genericError(c *fiber.Ctx) error {
-	return errors.New("Generic Error")
+	return eris.New("Generic Error")
 }
 
 func demoUnAuthorized(c *fiber.Ctx) error {
-	return errors.UnAuthorized("Không thể xác định danh tính")
+	return eris.New("Không thể xác định danh tính")
 }
 func demoRESTAPIError(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusUnauthorized).JSON("Bad Request")
 }
 
 func dividezero(c *fiber.Ctx) error {
-	return errors.BadRequest("Chia cho 0")
+	return eris.New("Chia cho 0")
 }
 
 func demoPage(c *fiber.Ctx) error {
@@ -81,8 +80,6 @@ func CustomErrorHandler(ctx *fiber.Ctx, err error) error {
 
 	if e, ok := err.(*fiber.Error); ok { //Thử kiểm tra xem có phải là kiểu fiber.Error không
 		statusCode = e.Code
-	} else if e, ok := err.(*errors.Error); ok { //Thử kiểm tra xem có phải là kiểu errors.Error
-		statusCode = e.Code
 	}
 
 	formattedStr := eris.ToCustomString(err, eris.StringFormat{
@@ -96,7 +93,12 @@ func CustomErrorHandler(ctx *fiber.Ctx, err error) error {
 		StackElemSep: " | ", // separator between elements of each stack frame
 		ErrorSep:     "\n",  // separator between each error in the chain
 	})
-	fmt.Println(formattedStr)
+
+	if len(formattedStr) > 1 { //Nếu là eris thì in calling stact
+		fmt.Println(formattedStr)
+	} else { //Nếu error không phải là eris thì in bình thường
+		fmt.Println(err.Error())
+	}
 
 	if err = ctx.Render("error", fiber.Map{
 		"ErrorMessage": err.Error(),

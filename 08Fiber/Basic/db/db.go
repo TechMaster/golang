@@ -1,9 +1,9 @@
 package db
 
-import (
-	"github.com/rotisserie/eris"
-)
+import "github.com/rotisserie/eris"
 
 func Query(query string) error {
-	return eris.New("query string is bad")
+	err := eris.New("query string is bad")
+	//err := errors.New("query string is bad")
+	return err
 }
