@@ -7,14 +7,22 @@
   <title>Demo xử lý lỗi trong Golang</title>
 </head>
 <body>
+  <h1>Error Log and Report</h1>
   <ul>
     <li><a href="/error">Generic Error: lỗi chung chung</a></li>
     <li><a href="/login">Lỗi UnAuthorize</a></li>
     <li><a href="/apierror">Lỗi khi gọi REST API</a></li>
-    <li><a href="/dividezero">Lỗi bad request</a></li>
+    <li><a href="/dividezero">Generic error không dùng erir.Error</a></li>
     <li><a href="/posts">Lỗi khi gọi nhiều tầng package</a></li>
     <li><a href="/notfound">Truy cập một đường dẫn không tồn tại</a></li>
-    <li><a href="/page">Giả lập cách render giống Iris</a></li>
+    <li><a href="/panic">Xử lý lỗi panic error</a></li>
+    <li><a href="/warn">Warning + trả về Status Code</a></li>
+    <li><a href="/cause">eris.Cause(error)</a></li>
+  </ul>
+  <h1>Session</h1>
+  <ul>
+    <li><a href="/getsessionid">Get Session ID</a></li>
+    <li><a href="/counter">Session Counter</a></li>
   </ul>
 </body>
 </html>
