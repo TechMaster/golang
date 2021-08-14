@@ -25,7 +25,38 @@ BenchmarkPassStructAsValue-8            1000000000               0.2876 ns/op
 BenchmarkPassStructAsPointer-8          1000000000               0.8367 ns/op
 ```
 
+## Thử tiếp với một struct to và phức tạp hơn
+
+Xem thư mục [largestruct.go](large/largestruct.go)
+
+```
+cd large
+go test -bench .
+```
+
+Kết quả
+```
+BenchmarkPassPersonAsValue-8            1000000000               0.2854 ns/op
+BenchmarkPassPersonAsPointer-8          26682351                40.49 ns/op
+```
+
+Với struct to, pass pointer struct còn chậm hơn rất nhiều
+
 ## Pointer hay Value Receiver
+Tôi viết một Repository theo 2 cách: 
+1. [pointer struct, pointer receiver](pointer/pointer_struct.go)
+2. [value struct, value receiver](value/value_struct.go)
+
+Trong [value_struct.go](value/value_struct.go) có hàm lưu tài khoản mới.
+Tôi sẽ phải append tài khoản mới vào slice bên trong `accRepo *AccountRepo`
+```go
+func (accRepo *AccountRepo) Save(acc AccountNew) (Id string, err error) {
+```
+
+Trong trường hợp này, Go static check khuyến cáo phải dùng pointer receiver. Mà như vậy mới đúng vì tôi thay đổi thuộc tính bên trong của `accRepo`
+
+Chuyển vào thư mục pv và chạy benchmark
+
 ```
 cd pv
 go test -bench .
@@ -43,7 +74,7 @@ Benchmark_GetIdPointer-8         9466819               126.1 ns/op
 Benchmark_GetIdValue-8           8473074               142.5 ns/op
 ```
 
-Kết quả cho thấy Value Receiver
+Kết quả cho thấy Value Receiver không chậm hơn so với Pointer Receiver khi struct nhỏ, thậm chí còn chạy nhanh ở 2 trong số 4 bài test !
 ## Tóm lại là
 
 1. Cần phải trả về thay đổi thuộc tính trong struct khi hàm kết thúc dùng truyền pointer struct
