@@ -14,6 +14,14 @@ Trong bài viết này chúng ta sẽ chọn ra thư viện JSON nào chạy nha
 3. github.com/json-iterator/go
 
 ## JSON2Struct nhanh hơn nhiều JSON2Map Và Goccy tốc độ tốt nhất !
+
+Chuyển vào thư mục demo và chạy lệnh `go test -bench .`
+```
+cd demo       
+go test -bench .
+```
+
+Kết quả là
 ```
 Benchmark_Goccy_JSON2Struct-8            1442637               826.7 ns/op
 Benchmark_Goccy_JSON2Map-8                488211              2304 ns/op
