@@ -1,6 +1,6 @@
 # So sánh giữa truyền pointer struct vs value struct
 
-## Khi muốn thay đổi thuộc tính trong struct cần phải truyền pointer struct
+## 1. Khi muốn thay đổi thuộc tính trong struct cần phải truyền pointer struct
 ```go
 func PassStructAsValue(acc Account) {
 	acc.name = "John"  //Chỉ có tác dụng bên trong hàm này
@@ -10,7 +10,7 @@ func PassStructAsPointer(acc *Account) {
 	acc.name = "John"  //Thuộc tính giữ giá trị thay đổi khi hàm kết thúc.
 }
 ```
-## Benchmark tốc độ: PassStructAsValue chạy nhanh hơn PassStructAsPointer khoảng 4 lần !
+## 2. Benchmark tốc độ: PassStructAsValue chạy nhanh hơn PassStructAsPointer khoảng 4 lần !
 ```
 $ go test -bench=.
 ```
@@ -25,7 +25,26 @@ BenchmarkPassStructAsValue-8            1000000000               0.2876 ns/op
 BenchmarkPassStructAsPointer-8          1000000000               0.8367 ns/op
 ```
 
-## Thử tiếp với một struct to và phức tạp hơn
+## 3. Truyền map bằng pointer khác gì value?
+```go
+func PassMapAsValue(data map[string]interface{}) {
+	data["name"] = "John"
+	data["email"] = "john@gmail.com"
+}
+
+func PassMapAsPointer(data *map[string]interface{}) {
+	(*data)["name"] = "Hann"
+	(*data)["email"] = "hann@gmail.com"
+}
+```
+Tác dụng thay đổi dữ liệu cả hai đều giống nhau. Cú pháp truyền con trỏ map phức tạp hơn.
+Tốc độ chậm hơn một chút
+```
+Benchmark_PassMapAsValue-8              36649004                30.32 ns/op
+Benchmark_PassMapAsPointer-8            36922010                30.36 ns/op
+```
+
+## 4. Struct to và phức tạp hơn
 
 Xem thư mục [largestruct.go](large/largestruct.go)
 
@@ -42,7 +61,7 @@ BenchmarkPassPersonAsPointer-8          26682351                40.49 ns/op
 
 Với struct to, pass pointer struct còn chậm hơn rất nhiều
 
-## Pointer hay Value Receiver
+## 5. Pointer hay Value Receiver
 Tôi viết một Repository theo 2 cách: 
 1. [pointer struct, pointer receiver](pointer/pointer_struct.go)
 2. [value struct, value receiver](value/value_struct.go)
@@ -75,13 +94,13 @@ Benchmark_GetIdValue-8           8473074               142.5 ns/op
 ```
 
 Kết quả cho thấy Value Receiver không chậm hơn so với Pointer Receiver khi struct nhỏ, thậm chí còn chạy nhanh ở 2 trong số 4 bài test !
-## Tóm lại là
+## 6. Tóm lại là
 
 1. Cần phải trả về thay đổi thuộc tính trong struct khi hàm kết thúc dùng truyền pointer struct
-2. Cần tốc độ và đơn giản truyền value struct
+2. **Cần tốc độ và đơn giản truyền value struct**
 
 
 
-## Tham khảo
+## 7. Tham khảo
 - [Go: Should I Use a Pointer instead of a Copy of my Struct?](https://medium.com/a-journey-with-go/go-should-i-use-a-pointer-instead-of-a-copy-of-my-struct-44b43b104963)
 - [Design Philosophy On Data And Semantics](https://www.ardanlabs.com/blog/2017/06/design-philosophy-on-data-and-semantics.html)

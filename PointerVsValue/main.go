@@ -23,6 +23,16 @@ func main() {
 	PassStructAsPointer(&acc)
 	fmt.Println(acc.name) //John
 
+	data := map[string]interface{}{
+		"name":  "rock",
+		"email": "rock@gmail.com",
+		"pass":  "abc123",
+	}
+	PassMapAsValue(data)
+	fmt.Println(data["name"]) //đã đổi thành John
+
+	PassMapAsPointer(&data)
+	fmt.Println(data["name"]) //đã đổi thành Hann
 }
 
 func PassStructAsValue(acc Account) {
@@ -31,4 +41,14 @@ func PassStructAsValue(acc Account) {
 
 func PassStructAsPointer(acc *Account) {
 	acc.name = "John"
+}
+
+func PassMapAsValue(data map[string]interface{}) {
+	data["name"] = "John"
+	data["email"] = "john@gmail.com"
+}
+
+func PassMapAsPointer(data *map[string]interface{}) {
+	(*data)["name"] = "Hann"
+	(*data)["email"] = "hann@gmail.com"
 }
