@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"pointer_value/value"
+)
 
 type Account struct {
 	id    string
@@ -10,6 +13,12 @@ type Account struct {
 }
 
 func main() {
+	demo := map[string]interface{}{}
+	if demo["name"] != nil {
+		fun := demo["name"].(string)
+		fmt.Println(fun)
+	}
+
 	acc := Account{
 		id:    "OX13",
 		name:  "Cuong",
@@ -33,12 +42,26 @@ func main() {
 
 	PassMapAsPointer(&data)
 	fmt.Println(data["name"]) //đã đổi thành Hann
+	//------------------------------------------------
+	var accNewV = value.AccountNew{
+		Email:    "test@example.com",
+		FullName: "Test Name",
+		Password: "Real Password",
+	}
+	fmt.Println(len(value.AccountRepository.GetAll()))
+	if id, err := value.AccountRepository.Save(accNewV); err == nil {
+		fmt.Println(id)
+	}
+	fmt.Println(len(value.AccountRepository.GetAll()))
+
 }
 
+//Pass by Value
 func PassStructAsValue(acc Account) {
 	acc.name = "John"
 }
 
+//Pass by Pointer
 func PassStructAsPointer(acc *Account) {
 	acc.name = "John"
 }

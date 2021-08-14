@@ -62,7 +62,7 @@ func (accRepo AccountRepo) GetAll() []Account {
 
 /*
 Tại sao ở đây tôi dùng Pointer receiver?
-Vì tôi sẽ bản ghi và accRepo.accounts !
+Vì tôi tạo bản ghi và save accRepo.accounts !
 */
 func (accRepo *AccountRepo) Save(acc AccountNew) (Id string, err error) {
 	if err := acc.Validate(); err != nil {
@@ -85,7 +85,8 @@ func (accRepo *AccountRepo) Save(acc AccountNew) (Id string, err error) {
 	}
 }
 
-func (accRepo AccountRepo) GetById(id string) (acc Account, err error) {
+//Chuyển từ trả về value sang pointer
+func (accRepo *AccountRepo) GetById(id string) (acc Account, err error) {
 	for _, account := range accRepo.accounts {
 		if account.Id == id {
 			return account, nil
