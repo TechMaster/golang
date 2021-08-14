@@ -12,7 +12,11 @@ func PassStructAsPointer(acc *Account) {
 ```
 ## Benchmark tốc độ: PassStructAsValue chạy nhanh hơn PassStructAsPointer khoảng 4 lần !
 ```
-go test -bench=.
+$ go test -bench=.
+```
+
+Kết quả
+```
 goos: darwin
 goarch: amd64
 pkg: pointer_value
@@ -20,6 +24,26 @@ cpu: Intel(R) Core(TM) i7-4800MQ CPU @ 2.70GHz
 BenchmarkPassStructAsValue-8            1000000000               0.2876 ns/op
 BenchmarkPassStructAsPointer-8          1000000000               0.8367 ns/op
 ```
+
+## Pointer hay Value Receiver
+```
+cd pv
+go test -bench .
+```
+
+Kết quả
+```
+Benchmark_GetAllPointer-8       1000000000               0.4498 ns/op
+Benchmark_GetAllValue-8         1000000000               0.2793 ns/op
+Benchmark_ValidatePointer-8        40315             28190 ns/op
+Benchmark_ValidateValue-8          41931             27839 ns/op
+Benchmark_SavePointer-8               16          67663546 ns/op
+Benchmark_SaveValue-8                 16          67766001 ns/op
+Benchmark_GetIdPointer-8         9466819               126.1 ns/op
+Benchmark_GetIdValue-8           8473074               142.5 ns/op
+```
+
+Kết quả cho thấy Value Receiver
 ## Tóm lại là
 
 1. Cần phải trả về thay đổi thuộc tính trong struct khi hàm kết thúc dùng truyền pointer struct
