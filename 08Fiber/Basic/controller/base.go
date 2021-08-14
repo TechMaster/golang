@@ -1,10 +1,12 @@
 package controller
 
 import (
+	"demofiber/api"
 	"demofiber/email"
 	"errors"
+	"fmt"
 
-	"demofiber/eris"
+	"github.com/TechMaster/eris"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -21,7 +23,23 @@ func DemoUnAuthorized(c *fiber.Ctx) error {
 	return eris.New("Không thể xác định danh tính")
 }
 func DemoRESTAPIError(c *fiber.Ctx) error {
-	return c.Status(fiber.StatusUnauthorized).JSON("Bad Request")
+	_ = c.Status(fiber.StatusUnauthorized).JSON("Bad Request")
+	return eris.New("Bad request").StatusCode(fiber.StatusUnauthorized)
+}
+
+func LoginAPI(c *fiber.Ctx) error {
+	if err := api.Login(c); err != nil {
+		return err
+	}
+	fmt.Println("Tiếp tục làm")
+	return nil
+}
+
+func LogOutAPI(c *fiber.Ctx) error {
+	if err := api.Logout1(c); err != nil {
+		return err
+	}
+	return nil
 }
 
 func DivideZero(c *fiber.Ctx) error {
@@ -35,7 +53,7 @@ func DemoPage(c *fiber.Ctx) error {
 }
 
 func DemoPanicError(c *fiber.Ctx) error {
-	if err := email.SendEmail("cuong@techmaster.vn", "Apply job", "My CV"); err != nil {
+	if err := api.Query(c); err != nil {
 		return err
 	} else {
 		viewData := make(fiber.Map)

@@ -1,8 +1,9 @@
 package db
 
 import (
-	"demofiber/eris"
 	"errors"
+
+	"github.com/TechMaster/eris"
 )
 
 func Query(query string) error {

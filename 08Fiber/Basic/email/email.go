@@ -2,14 +2,13 @@ package email
 
 import (
 	"demofiber/db"
-	"demofiber/eris"
+
+	"github.com/TechMaster/eris"
 )
 
 func SendEmail(to string, subject string, content string) error {
 	// Try to connect email server but failed
-
 	return eris.Panic("Failed to email server") //Lỗi trả về có Stack Trace
-	//return errors.New("Failed to email server") //Lỗi trả về không có Stack Trace
 }
 
 func Foo() error {

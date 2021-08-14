@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"demofiber/eris"
+	"github.com/TechMaster/eris"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -12,18 +12,27 @@ import (
 func CustomErrorHandler(ctx *fiber.Ctx, err error) error {
 	var statusCode = 500
 
-	if e, ok := err.(*eris.Error); ok {
-		handleEris(e)
-		if e.Code > 0 { // Mặc định là 500, nếu e.Code > 0 thì gán vào statusCode
-			statusCode = e.Code
+	switch e := err.(type) {
+	case *eris.Error:
+		handleErisError(e, ctx)
+		if e.JSON { //Có trả về báo lỗi dạng JSON cho REST API request không?
+			if e.Data == nil {
+				return ctx.Status(e.Code).JSON(e.Error())
+			} else {
+				errorBody := map[string]interface{}{
+					"error": e.Error(),
+					"data":  e.Data,
+				}
+				return ctx.Status(e.Code).JSON(errorBody)
+			}
 		}
-	} else if e, ok := err.(*fiber.Error); ok { //Thử kiểm tra xem có phải là kiểu fiber.Error không
+	case *fiber.Error:
 		statusCode = e.Code
 		fmt.Println(err.Error())
-	} else {
+	default:
 		fmt.Println(err.Error())
 	}
-
+	//Server side error page rendering : tạo trang web báo lỗi, không áp dụng cho REST API request
 	if err = ctx.Render("error/error", fiber.Map{
 		"ErrorMessage": err.Error(),
 		"StatusCode":   statusCode,
@@ -35,7 +44,7 @@ func CustomErrorHandler(ctx *fiber.Ctx, err error) error {
 }
 
 //Hàm chuyên xử lý Eris Error có Stack Trace
-func handleEris(err *eris.Error) {
+func handleErisError(err *eris.Error, ctx *fiber.Ctx) {
 	formattedStr := eris.ToCustomString(err, eris.StringFormat{
 		Options: eris.FormatOptions{
 			InvertOutput: true, // flag that inverts the error output (wrap errors shown first)

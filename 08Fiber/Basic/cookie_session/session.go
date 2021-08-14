@@ -1,18 +1,20 @@
 package cookie_session
 
 import (
+	"encoding/gob"
 	"time"
 
 	"github.com/gofiber/fiber/v2/middleware/session"
 )
 
-var SessStore *session.Store
+var Sess *session.Store
 
 func init() {
-	SessStore = session.New(session.Config{
+	Sess = session.New(session.Config{
 		KeyLookup:  "cookie:session_id",
 		Expiration: 24 * time.Hour,
 	})
+	gob.Register(Authenticate{})
 }
 
 /*

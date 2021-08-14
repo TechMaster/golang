@@ -20,6 +20,10 @@ func routeDemoErrorHandling(app *fiber.App) {
 
 	app.Get("/err/apierror", controller.DemoRESTAPIError) //Trả về lỗi JSON
 
+	app.Get("/err/loginapi", controller.LoginAPI) //Trả về lỗi JSON
+
+	app.Get("/err/wrap", controller.LogOutAPI) //Trả về lỗi JSON
+
 	app.Get("/err/dividezero", controller.DivideZero) //Trả về custom Error page
 
 	app.Get("/err/posts", controller.GetAllPosts) //Trả về custom Error page
@@ -35,6 +39,8 @@ func routeDemoErrorHandling(app *fiber.App) {
 
 func demoParamQuery(app *fiber.App) {
 	app.Get("/para/author/:name/book/:id", func(c *fiber.Ctx) error {
+		fmt.Println(c.Route().Path)
+
 		if id, err := c.ParamsInt("id"); err == nil {
 			fmt.Fprintf(c, "%d\n", id)
 			return c.SendString(fmt.Sprintf("%s - %d", c.Params("name"), id))
@@ -67,4 +73,5 @@ func demoParamQuery(app *fiber.App) {
 func routeSession(app *fiber.App) {
 	app.Get("/session/getsessionid", controller.GetSessionID)
 	app.Get("/session/counter", controller.SessionCounter)
+	app.Get("/session/authen", controller.SessionAuthenticate)
 }
