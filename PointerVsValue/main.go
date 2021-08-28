@@ -2,7 +2,8 @@ package main
 
 import (
 	"fmt"
-	"pointer_value/value"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 type Account struct {
@@ -42,17 +43,12 @@ func main() {
 
 	PassMapAsPointer(&data)
 	fmt.Println(data["name"]) //đã đổi thành Hann
-	//------------------------------------------------
-	var accNewV = value.AccountNew{
-		Email:    "test@example.com",
-		FullName: "Test Name",
-		Password: "Real Password",
+
+	for i := 0; i < 5; i++ {
+		if hashPass, err := bcrypt.GenerateFromPassword([]byte("HanoiMuaThu"), bcrypt.DefaultCost); err == nil {
+			fmt.Println(string(hashPass))
+		}
 	}
-	fmt.Println(len(value.AccountRepository.GetAll()))
-	if id, err := value.AccountRepository.Save(accNewV); err == nil {
-		fmt.Println(id)
-	}
-	fmt.Println(len(value.AccountRepository.GetAll()))
 
 }
 
