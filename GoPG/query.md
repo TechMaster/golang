@@ -91,3 +91,61 @@ Ngược lại dùng sẵn cột array. Câu lệnh SELECT đơn giản vãi !
 EXPLAIN ANALYZE SELECT * FROM demo.users u ;
 ```
 Tốc độ nhanh hơn 10 lần.
+
+## 5. Chọn user theo role nào đó
+
+### 5.1 Sử dụng lệnh JOIN
+```sql
+SELECT u."name", r.id, r."name" FROM 
+demo.users u 
+INNER JOIN demo.user_role ur ON u.id = ur.user_id 
+INNER JOIN demo.roles r ON ur.role_id = r.id
+WHERE r.id IN 2
+```
+
+|name|id|name|
+|----|--|----|
+|Sofia Keebler|2|STUDENT|
+|Alyson Dicki|2|STUDENT|
+|Royal Volkman|2|STUDENT|
+|Olen Kerluke|2|STUDENT|
+|Federico Sporer|2|STUDENT|
+|Ole Turner|2|STUDENT|
+|Susanna Grady|2|STUDENT|
+|Giuseppe Hauck|2|STUDENT|
+|Vivianne Schimmel|2|STUDENT|
+
+## 5.2 Sử dụng truy vấn trong array
+```sql
+SELECT * FROM users u WHERE 2=ANY(int_roles)
+```
+|id|name|int_roles|enum_roles|
+|--|----|---------|----------|
+|W4hmrqRO|Sofia Keebler|{7,2,1}|{EDITOR,STUDENT,ADMIN}|
+|ZimSGk4J|Alyson Dicki|{2,7,5}|{STUDENT,EDITOR,EMPLOYER}|
+|sg_qMoJP|Royal Volkman|{2,1,6}|{STUDENT,ADMIN,AUTHOR}|
+|nZOIcaKf|Olen Kerluke|{3,2,5}|{TRAINER,STUDENT,EMPLOYER}|
+|KSO1gcEW|Federico Sporer|{2,6,5}|{STUDENT,AUTHOR,EMPLOYER}|
+|o2FtoQCV|Ole Turner|{2,8,4}|{STUDENT,MAINTAINER,SALE}|
+|BpoglBOh|Susanna Grady|{3,2,6}|{TRAINER,STUDENT,AUTHOR}|
+|_61Lq2Vr|Giuseppe Hauck|{5,6,2}|{EMPLOYER,AUTHOR,STUDENT}|
+
+## 6. Liệt kê danh sách user có đúng role ROLE `2` và `3`
+
+## 6.1 Nếu dùng cột array thì quá đơn giản
+```sql
+SELECT * FROM users u WHERE 2=ANY(int_roles) and 3=ANY(int_roles)
+```
+
+|id|name|int_roles|enum_roles|
+|--|----|---------|----------|
+|nZOIcaKf|Olen Kerluke|{3,2,5}|{TRAINER,STUDENT,EMPLOYER}|
+|BpoglBOh|Susanna Grady|{3,2,6}|{TRAINER,STUDENT,AUTHOR}|
+|_goFSoLK|Uriah Russel|{3,6,2}|{TRAINER,AUTHOR,STUDENT}|
+|onWWgLXw|Emilia Spinka|{7,2,3}|{EDITOR,STUDENT,TRAINER}|
+|9fVbfM1A|Gregoria Mraz|{1,3,2}|{ADMIN,TRAINER,STUDENT}|
+|M2XStLps|Larue Harvey|{2,3,4}|{STUDENT,TRAINER,SALE}|
+|zwrKD5HT|Thora Stoltenberg|{3,6,2}|{TRAINER,AUTHOR,STUDENT}|
+|TyRStF1z|Melvin McLaughlin|{2,5,3}|{STUDENT,EMPLOYER,TRAINER}|
+
+## 6.2 Còn join bảng thì tôi chưa nghĩ ra !
